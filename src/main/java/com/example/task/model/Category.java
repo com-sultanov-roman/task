@@ -1,17 +1,21 @@
 package com.example.task.model;
-
-import org.springframework.context.annotation.Primary;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Category {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
+
+    @Column(columnDefinition = "VARCHAR(250)")
+    private String name;
+
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Product> products = new ArrayList<>();
 
 
 }
