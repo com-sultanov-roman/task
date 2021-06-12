@@ -1,11 +1,14 @@
 package com.example.task.model;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 public class Product {
 
     @Id

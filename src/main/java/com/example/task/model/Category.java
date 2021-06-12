@@ -1,9 +1,12 @@
 package com.example.task.model;
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 public class Category {
 
     @Id

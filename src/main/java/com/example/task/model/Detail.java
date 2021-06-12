@@ -1,8 +1,11 @@
 package com.example.task.model;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
 public class Detail {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

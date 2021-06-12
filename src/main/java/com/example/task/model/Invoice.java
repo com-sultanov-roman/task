@@ -1,11 +1,19 @@
 package com.example.task.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.stereotype.Service;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Invoice {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
