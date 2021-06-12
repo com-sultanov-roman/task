@@ -1,7 +1,9 @@
 package com.example.task.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name="orders")
 @Getter
+@Setter
 public class Order {
 
     @Id
@@ -21,12 +24,13 @@ public class Order {
     private java.util.Date date;
 
     @ManyToOne
-    @JoinColumn(name="cust_id", nullable = false)
+    @JoinColumn(name="cust_id")
     private Customer customer;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Detail> detail = new ArrayList<>();
 
-    @OneToOne(mappedBy = "order")
+    @JsonIgnore
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Invoice invoice;
 }

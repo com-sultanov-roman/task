@@ -10,8 +10,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class InvoiceListResponseWrapper {
-    private List<Invoice> result;
+public class ResponseWrapper<T> {
+    private List<T> result;
 
     @SneakyThrows
     @Override
