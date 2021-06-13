@@ -31,6 +31,7 @@ public class CategoryController {
     }
 
     @GetMapping(value = "category")
+    @ResponseBody
     private String getCategoryById(@RequestParam(name = "product_id") int productId, HttpServletResponse httpServletResponse){
         Category category = categoryService.getProductCategoryById(productId);
         ResponseObjectWrapper<Category> responseObjectWrapper = new ResponseObjectWrapper<>();
