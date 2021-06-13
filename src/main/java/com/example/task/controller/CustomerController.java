@@ -22,24 +22,23 @@ public class CustomerController {
     }
 
     @GetMapping(value = "customers_without_orders")
-    private String getCustomersWithoutOrders(){
+    private String getCustomersWithoutOrders() {
         List<Customer> customerList = customerService.getCustomersWithoutOrders();
         ResponseListWrapper<Customer> responseListWrapper = new ResponseListWrapper<>(customerList);
         return responseListWrapper.toString();
     }
 
     @GetMapping(value = "customers_last_orders")
-    private String getCustomersLastOrders(){
+    private String getCustomersLastOrders() {
         List<Customer> customerList = customerService.getAll();
         List<CustomersLastOrderDTO> resultList = new ArrayList<>();
         customerList.forEach(customer -> {
-            if(!customer.getOrders().isEmpty()){
+            if (!customer.getOrders().isEmpty()) {
                 CustomersLastOrderDTO customersLastOrderDTO = new CustomersLastOrderDTO();
                 Order mostRecentOrder;
                 customersLastOrderDTO.setId(customer.getId());
                 customersLastOrderDTO.setName(customer.getName());
-                mostRecentOrder = Collections.max(customer.getOrders(), (o1, o2) -> {
-                    return Long.signum(o1.getDate().getTime() - o2.getDate().getTime());});
+                mostRecentOrder = Collections.max(customer.getOrders(), (o1, o2) -> Long.signum(o1.getDate().getTime() - o2.getDate().getTime()));
                 customersLastOrderDTO.setDate(mostRecentOrder.getDate());
                 resultList.add(customersLastOrderDTO);
             }

@@ -6,6 +6,7 @@ import com.example.task.model.Order;
 import com.example.task.repository.CustomerRepository;
 import com.example.task.repository.InvoiceRepository;
 import com.example.task.repository.OrderRepository;
+import com.example.task.repository.ProductRepository;
 import com.example.task.service.InvoiceService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,6 +21,7 @@ public class TaskApplication {
     public static InvoiceRepository invoiceRepository;
     public static OrderRepository orderRepository;
     public static CustomerRepository customerRepository;
+    public static ProductRepository productRepository;
 
 
     public static Invoice generateInvoice() {
@@ -88,10 +90,12 @@ public class TaskApplication {
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(TaskApplication.class, args);
-        InvoiceRepository invoiceRepository = applicationContext.getBean(InvoiceRepository.class);
-        OrderRepository orderRepository = applicationContext.getBean(OrderRepository.class);
-        CustomerRepository customerRepository = applicationContext.getBean(CustomerRepository.class);
-        generateOrdersInvoicesCustomers();
+        invoiceRepository = applicationContext.getBean(InvoiceRepository.class);
+        orderRepository = applicationContext.getBean(OrderRepository.class);
+        customerRepository = applicationContext.getBean(CustomerRepository.class);
+        productRepository = applicationContext.getBean(ProductRepository.class);
+
+        //generateOrdersInvoicesCustomers();
     }
 
 }
