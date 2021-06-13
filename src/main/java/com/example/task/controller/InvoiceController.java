@@ -2,7 +2,7 @@ package com.example.task.controller;
 
 import com.example.task.model.Invoice;
 import com.example.task.service.InvoiceService;
-import com.example.task.wrapper.ResponseWrapper;
+import com.example.task.wrapper.ResponseListWrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,8 +32,8 @@ public class InvoiceController {
                 filter(invoice -> invoice.getIssued().after(invoice.getDue()))
                 .collect(Collectors.toList());
 
-        ResponseWrapper<Invoice> responseWrapper = new ResponseWrapper<Invoice>(invoiceList);
-        return responseWrapper.toString();
+        ResponseListWrapper<Invoice> responseListWrapper = new ResponseListWrapper<Invoice>(invoiceList);
+        return responseListWrapper.toString();
     }
 
     @GetMapping(value = "/wrong_date_invoices")
@@ -53,7 +53,7 @@ public class InvoiceController {
             resultList.add(map);
         });
 
-        ResponseWrapper<Map<String, Long>> responseWrapper = new ResponseWrapper<Map<String, Long>>(resultList);
-        return responseWrapper.toString();
+        ResponseListWrapper<Map<String, Long>> responseListWrapper = new ResponseListWrapper<Map<String, Long>>(resultList);
+        return responseListWrapper.toString();
     }
 }
