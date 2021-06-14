@@ -4,6 +4,8 @@ import com.example.task.model.Detail;
 import com.example.task.repository.DetailRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DetailService {
 
@@ -11,6 +13,10 @@ public class DetailService {
 
     public DetailService(DetailRepository detailRepository) {
         this.detailRepository = detailRepository;
+    }
+
+    public List<Detail> getDetailByOrderId(int id){
+        return detailRepository.getDetailsByOrderId(id);
     }
 
     public Detail save(Detail detail){

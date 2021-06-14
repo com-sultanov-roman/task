@@ -6,12 +6,10 @@ import com.example.task.model.*;
 import com.example.task.service.*;
 import com.example.task.wrapper.ResponseListWrapper;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -32,7 +30,6 @@ public class OrderController {
     private final DetailService detailService;
 
 
-
     public OrderController(OrderService orderService, InvoiceService invoiceService, CustomerService customerService, ProductService productService, DetailService detailService) {
         this.orderService = orderService;
         this.invoiceService = invoiceService;
@@ -43,7 +40,7 @@ public class OrderController {
 
     @GetMapping(value = "orders_without_details")
     @ResponseBody
-    private String ordersWithoutDetails(){
+    private String ordersWithoutDetails() {
         List<Order> orderList = orderService.getAll();
 
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
@@ -58,18 +55,18 @@ public class OrderController {
         return responseListWrapper.toString();
     }
 
-    @PostMapping(value="order", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "order", consumes = "application/json", produces = "application/json")
     @ResponseBody
-    private MakeOrderHttpResponseDTO makeOrder(@RequestBody MakeOrderHttpRequestDTO httpRequest, HttpServletResponse httpServletResponse){
+    private MakeOrderHttpResponseDTO makeOrder(@RequestBody MakeOrderHttpRequestDTO httpRequest, HttpServletResponse httpServletResponse) {
 
         int customerId = httpRequest.getCustomer_id();
         int productId = httpRequest.getProduct_id();
         short quantity = httpRequest.getQuantity();
 
         Customer customer = customerService.getCustomerById(customerId);
-        Product  product = productService.getProductById(productId);
+        Product product = productService.getProductById(productId);
 
-        if(customer != null && product != null){
+        if (customer != null && product != null) {
 
             Order order = new Order();
             order.setDate(new Date(System.currentTimeMillis()));
@@ -99,10 +96,18 @@ public class OrderController {
             httpServletResponse.setHeader("status", "SUCCESS");
             httpServletResponse.setIntHeader("invoice_number", invoice.getId());
             return new MakeOrderHttpResponseDTO("SUCCESS", invoice.getId());
-        }else{
+        } else {
             httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             httpServletResponse.setHeader("status", "FAILED");
             return new MakeOrderHttpResponseDTO("FAILED", -1);
         }
+    }
+
+    @GetMapping(value = "order/details")
+    @ResponseBody
+    private String getOrderDetailsById(@RequestParam(name = "order_id") int orderId) {
+        List<Detail> detailList = detailService.getDetailByOrderId(orderId);
+        ResponseListWrapper<Detail> responseListWrapper = new ResponseListWrapper<>(detailList);
+        return responseListWrapper.toString();
     }
 }
