@@ -1,12 +1,17 @@
 package com.example.task.controller;
 
-import com.example.task.model.Order;
-import com.example.task.service.OrderService;
+import com.example.task.dto.MakeOrderHttpRequestDTO;
+import com.example.task.dto.MakeOrderHttpResponseDTO;
+import com.example.task.model.*;
+import com.example.task.service.*;
 import com.example.task.wrapper.ResponseListWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -14,16 +19,30 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@ResponseBody
 public class OrderController {
 
     private final OrderService orderService;
 
-    public OrderController(OrderService orderService) {
+    private final InvoiceService invoiceService;
+
+    private final CustomerService customerService;
+
+    private final ProductService productService;
+
+    private final DetailService detailService;
+
+
+
+    public OrderController(OrderService orderService, InvoiceService invoiceService, CustomerService customerService, ProductService productService, DetailService detailService) {
         this.orderService = orderService;
+        this.invoiceService = invoiceService;
+        this.customerService = customerService;
+        this.productService = productService;
+        this.detailService = detailService;
     }
 
     @GetMapping(value = "orders_without_details")
+    @ResponseBody
     private String ordersWithoutDetails(){
         List<Order> orderList = orderService.getAll();
 
@@ -39,4 +58,51 @@ public class OrderController {
         return responseListWrapper.toString();
     }
 
+    @PostMapping(value="order", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    private MakeOrderHttpResponseDTO makeOrder(@RequestBody MakeOrderHttpRequestDTO httpRequest, HttpServletResponse httpServletResponse){
+
+        int customerId = httpRequest.getCustomer_id();
+        int productId = httpRequest.getProduct_id();
+        short quantity = httpRequest.getQuantity();
+
+        Customer customer = customerService.getCustomerById(customerId);
+        Product  product = productService.getProductById(productId);
+
+        if(customer != null && product != null){
+
+            Order order = new Order();
+            order.setDate(new Date(System.currentTimeMillis()));
+            order.setCustomer(customer);
+
+            Detail detail = new Detail();
+            detail.setProduct(product);
+            detail.setOrder(order);
+            detail.setQuantity(quantity);
+
+            customer.getOrders().add(order);
+
+            Invoice invoice = new Invoice();
+            invoice.setOrder(order);
+            long curTime = System.currentTimeMillis();
+            invoice.setIssued(new Date(curTime));
+            invoice.setDue(new Date((curTime + 86_400_000 * 7)));
+            invoice.setAmount(product.getPrice());
+
+
+            orderService.save(order);
+            detailService.save(detail);
+            customerService.save(customer);
+            invoice = invoiceService.save(invoice);
+
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+            httpServletResponse.setHeader("status", "SUCCESS");
+            httpServletResponse.setIntHeader("invoice_number", invoice.getId());
+            return new MakeOrderHttpResponseDTO("SUCCESS", invoice.getId());
+        }else{
+            httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            httpServletResponse.setHeader("status", "FAILED");
+            return new MakeOrderHttpResponseDTO("FAILED", -1);
+        }
+    }
 }

@@ -28,4 +28,8 @@ public class InvoiceService {
         return invoiceRepository.getAll();
     }
 
+    public Invoice save(Invoice invoice){
+        return invoiceRepository.save(invoice);
+    }
+
 }

@@ -19,4 +19,6 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
     @Query(value = "SELECT * FROM customer", nativeQuery = true)
     public List<Customer> getAll();
 
+    public Customer getCustomerById(int id);
+
 }

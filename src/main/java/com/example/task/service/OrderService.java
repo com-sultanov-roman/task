@@ -1,6 +1,7 @@
 package com.example.task.service;
 
 
+import com.example.task.model.Invoice;
 import com.example.task.model.Order;
 import com.example.task.repository.InvoiceRepository;
 import com.example.task.repository.OrderRepository;
@@ -20,5 +21,9 @@ public class OrderService {
 
     public List<Order> getAll(){
         return orderRepository.getAll();
+    }
+
+    public Order save(Order order){
+        return orderRepository.save(order);
     }
 }

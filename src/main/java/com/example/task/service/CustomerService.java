@@ -11,7 +11,6 @@ import java.util.List;
 public class CustomerService {
     private final CustomerRepository customerRepository;
 
-
     @Autowired
     public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -24,4 +23,11 @@ public class CustomerService {
     public List<Customer> getAll(){
         return customerRepository.getAll();
     }
+
+    public Customer getCustomerById(int id){ return customerRepository.getCustomerById(id); }
+
+    public Customer save(Customer customer){
+        return customerRepository.save(customer);
+    }
+
 }
