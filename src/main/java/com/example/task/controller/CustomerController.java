@@ -1,6 +1,7 @@
 package com.example.task.controller;
 
 import com.example.task.dto.CustomersLastOrderDTO;
+import com.example.task.dto.NumberOfProductsInYearDTO;
 import com.example.task.model.Customer;
 import com.example.task.model.Order;
 import com.example.task.service.CustomerService;
@@ -44,6 +45,13 @@ public class CustomerController {
             }
         });
         ResponseListWrapper<CustomersLastOrderDTO> responseListWrapper = new ResponseListWrapper<>(resultList);
+        return responseListWrapper.toString();
+    }
+
+    @GetMapping(value = "number_of_products_in_year")
+    private String getNumberOfProductsInYear() {
+        List<NumberOfProductsInYearDTO> numberOfProductsInYearDTOList = customerService.getNumberOfProductsInYear();
+        ResponseListWrapper<NumberOfProductsInYearDTO> responseListWrapper = new ResponseListWrapper<>(numberOfProductsInYearDTOList);
         return responseListWrapper.toString();
     }
 

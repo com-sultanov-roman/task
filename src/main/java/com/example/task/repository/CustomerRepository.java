@@ -1,6 +1,7 @@
 package com.example.task.repository;
 
 import com.example.task.dto.CustomersLastOrderDTO;
+import com.example.task.dto.NumberOfProductsInYearDTO;
 import com.example.task.model.Customer;
 import com.example.task.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,5 +21,11 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
     public List<Customer> getAll();
 
     public Customer getCustomerById(int id);
+
+    @Query(value = "SELECT customer.country as countryName, COUNT(customer.country) AS number FROM customer, orders\n" +
+            "WHERE customer.id = orders.cust_id \n" +
+            "AND orders.date BETWEEN '2016-01-01' AND '2017-01-01' \n" +
+            "GROUP BY customer.country",nativeQuery = true)
+    public List<NumberOfProductsInYearDTO> getNumberOfProductsInYear();
 
 }

@@ -1,5 +1,6 @@
 package com.example.task.service;
 
+import com.example.task.dto.NumberOfProductsInYearDTO;
 import com.example.task.model.Customer;
 import com.example.task.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,7 @@ public class CustomerService {
     public Customer save(Customer customer){
         return customerRepository.save(customer);
     }
+
+    public List<NumberOfProductsInYearDTO> getNumberOfProductsInYear() {return customerRepository.getNumberOfProductsInYear();}
 
 }
