@@ -1,6 +1,7 @@
 package com.example.task.controller;
 
 import com.example.task.dto.BulkProductDTO;
+import com.example.task.dto.HighDemandProductsDTO;
 import com.example.task.model.Category;
 import com.example.task.model.Detail;
 import com.example.task.model.Product;
@@ -50,5 +51,13 @@ public class ProductController {
         ResponseListWrapper<BulkProductDTO> responseListWrapper = new ResponseListWrapper<>(bulkProductDTOList);
         return responseListWrapper.toString();
     }
+
+    @GetMapping(value = "/high_demand_products")
+    private String getHighDemandProducts(){
+        List<HighDemandProductsDTO> highDemandProducts = productService.getHighDemandProducts();
+        ResponseListWrapper<HighDemandProductsDTO> responseListWrapper = new ResponseListWrapper<>(highDemandProducts);
+        return responseListWrapper.toString();
+    }
+
 
 }

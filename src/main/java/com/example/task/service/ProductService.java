@@ -1,6 +1,7 @@
 package com.example.task.service;
 
 import com.example.task.dto.BulkProductDTO;
+import com.example.task.dto.HighDemandProductsDTO;
 import com.example.task.model.Customer;
 import com.example.task.model.Product;
 import com.example.task.repository.ProductRepository;
@@ -25,8 +26,8 @@ public class ProductService {
         return productRepository.getProductById(id);
     }
 
-    public List<BulkProductDTO> getBulkProducts(){
-        return productRepository.getBulkProducts();
-    }
+    public List<BulkProductDTO> getBulkProducts(){ return productRepository.getBulkProducts(); }
+
+    public List<HighDemandProductsDTO> getHighDemandProducts(){ return productRepository.getHighDemandProducts(); }
 
 }
