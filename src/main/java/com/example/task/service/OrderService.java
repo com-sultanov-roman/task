@@ -1,14 +1,11 @@
 package com.example.task.service;
 
 
-import com.example.task.model.Invoice;
+import com.example.task.dto.OrderWithoutInvoicesDTO;
 import com.example.task.model.Order;
-import com.example.task.repository.InvoiceRepository;
 import com.example.task.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -26,4 +23,7 @@ public class OrderService {
     public Order save(Order order){
         return orderRepository.save(order);
     }
+
+    public List<OrderWithoutInvoicesDTO> getOrdersWithoutInvoices(){return orderRepository.getOrdersWithoutInvoices();}
+
 }

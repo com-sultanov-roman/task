@@ -1,17 +1,15 @@
 package com.example.task.controller;
 
 import com.example.task.dto.MakePaymentHttpRequestDTO;
-import com.example.task.dto.MakePaymentHttpResponse;
+import com.example.task.dto.MakePaymentHttpResponseDTO;
 import com.example.task.model.Invoice;
 import com.example.task.model.Payment;
-import com.example.task.repository.PaymentRepository;
 import com.example.task.service.*;
 import com.example.task.wrapper.ResponseObjectWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.Date;
 
 @Controller
@@ -41,24 +39,24 @@ public class PaymentController {
 
 
     @PostMapping(value = "payment", consumes = "application/json",  produces = "application/json")
-    private MakePaymentHttpResponse makePayment(@RequestBody MakePaymentHttpRequestDTO makePaymentHttpRequestDTO, HttpServletRequest httpServletRequest) {
+    private MakePaymentHttpResponseDTO makePayment(@RequestBody MakePaymentHttpRequestDTO makePaymentHttpRequestDTO, HttpServletRequest httpServletRequest) {
         Invoice invoice = invoiceService.getInvoiceById(makePaymentHttpRequestDTO.getInvoice_id());
-        MakePaymentHttpResponse makePaymentHttpResponse = new MakePaymentHttpResponse();
+        MakePaymentHttpResponseDTO makePaymentHttpResponseDTO = new MakePaymentHttpResponseDTO();
         if(invoice != null){
             Payment payment = new Payment();
             payment.setInvoice(invoice);
             payment.setTimestamp(new Date(System.currentTimeMillis()));
             payment.setAmount(invoice.getAmount());
-            makePaymentHttpResponse.setStatus("SUCCESS");
-            makePaymentHttpResponse.setPayment(payment);
+            makePaymentHttpResponseDTO.setStatus("SUCCESS");
+            makePaymentHttpResponseDTO.setPayment(payment);
 
             invoiceService.save(invoice);
             paymentService.save(payment);
 
         }else{
-            makePaymentHttpResponse.setStatus("FAILED");
+            makePaymentHttpResponseDTO.setStatus("FAILED");
         }
-        return makePaymentHttpResponse;
+        return makePaymentHttpResponseDTO;
     }
 
     @GetMapping(value = "payment/details")

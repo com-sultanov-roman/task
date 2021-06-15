@@ -2,6 +2,7 @@ package com.example.task.controller;
 
 import com.example.task.dto.MakeOrderHttpRequestDTO;
 import com.example.task.dto.MakeOrderHttpResponseDTO;
+import com.example.task.dto.OrderWithoutInvoicesDTO;
 import com.example.task.model.*;
 import com.example.task.service.*;
 import com.example.task.wrapper.ResponseListWrapper;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
+@ResponseBody
 public class OrderController {
 
     private final OrderService orderService;
@@ -39,7 +41,6 @@ public class OrderController {
     }
 
     @GetMapping(value = "orders_without_details")
-    @ResponseBody
     private String ordersWithoutDetails() {
         List<Order> orderList = orderService.getAll();
 
@@ -56,7 +57,6 @@ public class OrderController {
     }
 
     @PostMapping(value = "order", consumes = "application/json", produces = "application/json")
-    @ResponseBody
     private MakeOrderHttpResponseDTO makeOrder(@RequestBody MakeOrderHttpRequestDTO httpRequest, HttpServletResponse httpServletResponse) {
 
         int customerId = httpRequest.getCustomer_id();
@@ -104,10 +104,16 @@ public class OrderController {
     }
 
     @GetMapping(value = "order/details")
-    @ResponseBody
     private String getOrderDetailsById(@RequestParam(name = "order_id") int orderId) {
         List<Detail> detailList = detailService.getDetailByOrderId(orderId);
         ResponseListWrapper<Detail> responseListWrapper = new ResponseListWrapper<>(detailList);
         return responseListWrapper.toString();
+    }
+
+    @GetMapping(value = "orders_without_invoices")
+    private String getOrderWithoutInvoices(){
+        List<OrderWithoutInvoicesDTO> orderWithoutInvoicesDTOList = orderService.getOrdersWithoutInvoices();
+        ResponseListWrapper<OrderWithoutInvoicesDTO> orderWithoutInvoicesDTOResponseListWrapper = new ResponseListWrapper<>(orderWithoutInvoicesDTOList);
+        return orderWithoutInvoicesDTOResponseListWrapper.toString();
     }
 }

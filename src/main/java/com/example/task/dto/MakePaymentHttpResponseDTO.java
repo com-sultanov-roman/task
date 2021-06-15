@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MakePaymentHttpResponse {
+public class MakePaymentHttpResponseDTO {
     private String status;
     private Payment payment;
 }
