@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
+@ResponseBody
 public class ProductController {
 
     private final ProductService productService;
@@ -24,7 +25,6 @@ public class ProductController {
     }
 
     @GetMapping(value = "product/list")
-    @ResponseBody
     private String getCategoryList(){
         List<Product> productList = productService.getAll();
         ResponseListWrapper<Product> responseListWrapper = new ResponseListWrapper<>(productList);
@@ -32,7 +32,6 @@ public class ProductController {
     }
 
     @GetMapping(value = "product/details")
-    @ResponseBody
     private String getProductDetailsById(@RequestParam(name = "product_id") int productId, HttpServletResponse httpServletResponse){
         Product product = productService.getProductById(productId);
         ResponseObjectWrapper<List<Detail>> responseObjectWrapper = new ResponseObjectWrapper<>();

@@ -32,4 +32,8 @@ public class InvoiceService {
         return invoiceRepository.save(invoice);
     }
 
+    public Invoice getInvoiceById(int id){
+        return invoiceRepository.getInvoiceById(id);
+    }
+
 }

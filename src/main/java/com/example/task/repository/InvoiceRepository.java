@@ -15,5 +15,7 @@ public interface InvoiceRepository extends CrudRepository<Invoice, Integer>{
     @Query(value = "SELECT i FROM Invoice i")
     List<Invoice> getAll();
 
+    Invoice getInvoiceById(int id);
+
 
 }

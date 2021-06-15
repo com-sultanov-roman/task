@@ -1,5 +1,6 @@
 package com.example.task.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,6 +35,7 @@ public class Invoice {
     @JoinColumn(name = "ord_id")
     private Order order;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Payment> payments = new ArrayList<>();
 }
