@@ -6,10 +6,9 @@ import com.example.task.model.Invoice;
 import com.example.task.model.Payment;
 import com.example.task.repository.PaymentRepository;
 import com.example.task.service.*;
+import com.example.task.wrapper.ResponseObjectWrapper;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -60,6 +59,13 @@ public class PaymentController {
             makePaymentHttpResponse.setStatus("FAILED");
         }
         return makePaymentHttpResponse;
+    }
+
+    @GetMapping(value = "payment/details")
+    private String getPaymentDetailsById(@RequestParam(name="id") int id){
+        Payment payment = paymentService.getPaymentById(id);
+        ResponseObjectWrapper<Payment> responseObjectWrapper = new ResponseObjectWrapper<>(payment);
+        return responseObjectWrapper.toString();
     }
 
 

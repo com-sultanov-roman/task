@@ -15,4 +15,8 @@ public class PaymentService {
     public Payment save(Payment payment){
         return paymentRepository.save(payment);
     }
+
+    public Payment getPaymentById(int id){
+        return paymentRepository.getPaymentById(id);
+    }
 }
