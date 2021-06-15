@@ -1,5 +1,6 @@
 package com.example.task.controller;
 
+import com.example.task.dto.BulkProductDTO;
 import com.example.task.model.Category;
 import com.example.task.model.Detail;
 import com.example.task.model.Product;
@@ -24,14 +25,14 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping(value = "product/list")
+    @GetMapping(value = "/product/list")
     private String getCategoryList(){
         List<Product> productList = productService.getAll();
         ResponseListWrapper<Product> responseListWrapper = new ResponseListWrapper<>(productList);
         return responseListWrapper.toString();
     }
 
-    @GetMapping(value = "product/details")
+    @GetMapping(value = "/product/details")
     private String getProductDetailsById(@RequestParam(name = "product_id") int productId, HttpServletResponse httpServletResponse){
         Product product = productService.getProductById(productId);
         ResponseObjectWrapper<List<Detail>> responseObjectWrapper = new ResponseObjectWrapper<>();
@@ -43,5 +44,11 @@ public class ProductController {
         return responseObjectWrapper.toString();
     }
 
+    @GetMapping(value = "/bulk_products")
+    private String getBulkProducts(){
+        List<BulkProductDTO> bulkProductDTOList = productService.getBulkProducts();
+        ResponseListWrapper<BulkProductDTO> responseListWrapper = new ResponseListWrapper<>(bulkProductDTOList);
+        return responseListWrapper.toString();
+    }
 
 }
