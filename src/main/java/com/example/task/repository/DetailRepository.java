@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface DetailRepository extends CrudRepository<Detail, Integer> {
+
     @Query(value = "SELECT d FROM Detail d, Order o WHERE o = d.order AND o.id = :id")
     public List<Detail> getDetailsByOrderId(int id);
 }

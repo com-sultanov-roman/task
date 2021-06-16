@@ -1,5 +1,6 @@
 package com.example.task.service;
 
+import com.example.task.dto.OverpaidInvoicesDTO;
 import com.example.task.model.Invoice;
 import com.example.task.repository.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,7 @@ public class InvoiceService {
     public Invoice getInvoiceById(int id){
         return invoiceRepository.getInvoiceById(id);
     }
+
+    public List<OverpaidInvoicesDTO> getOverpaidInvoices(){ return invoiceRepository.getOverpaidInvoices(); }
 
 }

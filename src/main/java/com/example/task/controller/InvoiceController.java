@@ -1,5 +1,6 @@
 package com.example.task.controller;
 
+import com.example.task.dto.OverpaidInvoicesDTO;
 import com.example.task.model.Invoice;
 import com.example.task.service.InvoiceService;
 import com.example.task.wrapper.ResponseListWrapper;
@@ -55,5 +56,12 @@ public class InvoiceController {
 
         ResponseListWrapper<Map<String, Long>> responseListWrapper = new ResponseListWrapper<Map<String, Long>>(resultList);
         return responseListWrapper.toString();
+    }
+
+    @GetMapping(value = "/overpaid_invoices")
+    private String getOverpaidInvoices(){
+        List<OverpaidInvoicesDTO> overpaidInvoicesDTOList = invoiceService.getOverpaidInvoices();
+        ResponseListWrapper<OverpaidInvoicesDTO> overpaidInvoicesDTOResponseListWrapper = new ResponseListWrapper<>(overpaidInvoicesDTOList);
+        return overpaidInvoicesDTOResponseListWrapper.toString();
     }
 }

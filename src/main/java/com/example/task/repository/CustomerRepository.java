@@ -22,10 +22,7 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
 
     public Customer getCustomerById(int id);
 
-    @Query(value = "SELECT customer.country as countryName, COUNT(customer.country) AS number FROM customer, orders\n" +
-            "WHERE customer.id = orders.cust_id \n" +
-            "AND orders.date BETWEEN '2016-01-01' AND '2017-01-01' \n" +
-            "GROUP BY customer.country",nativeQuery = true)
+    @Query(value = "SELECT customer.country as countryName, COUNT(customer.country) AS number FROM customer, orders WHERE customer.id = orders.cust_id AND orders.date BETWEEN '2016-01-01' AND '2017-01-01' GROUP BY customer.country", nativeQuery = true)
     public List<NumberOfProductsInYearDTO> getNumberOfProductsInYear();
 
 }
