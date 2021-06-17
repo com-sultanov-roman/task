@@ -8,16 +8,12 @@ import lombok.Setter;
 import java.util.Date;
 
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-public class CustomersLastOrderDTO {
+public interface CustomersLastOrderDTO {
 
-    private int id;
+    public int getId();
 
-    private String name;
+    public String getName();
 
-    private Date date;
+    public Date getLast_order_date();
 
 }

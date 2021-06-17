@@ -1,5 +1,6 @@
 package com.example.task.service;
 
+import com.example.task.dto.CustomersLastOrderDTO;
 import com.example.task.dto.NumberOfProductsInYearDTO;
 import com.example.task.model.Customer;
 import com.example.task.repository.CustomerRepository;
@@ -17,20 +18,28 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public List<Customer> getCustomersWithoutOrders(){
+    public List<Customer> getCustomersWithoutOrders() {
         return customerRepository.getCustomersWithoutOrders();
     }
 
-    public List<Customer> getAll(){
+    public List<Customer> getAll() {
         return customerRepository.getAll();
     }
 
-    public Customer getCustomerById(int id){ return customerRepository.getCustomerById(id); }
+    public Customer getCustomerById(int id) {
+        return customerRepository.getCustomerById(id);
+    }
 
-    public Customer save(Customer customer){
+    public Customer save(Customer customer) {
         return customerRepository.save(customer);
     }
 
-    public List<NumberOfProductsInYearDTO> getNumberOfProductsInYear() {return customerRepository.getNumberOfProductsInYear();}
+    public List<NumberOfProductsInYearDTO> getNumberOfProductsInYear() {
+        return customerRepository.getNumberOfProductsInYear();
+    }
+
+    public List<CustomersLastOrderDTO> getCustomersLastOrder() {
+        return customerRepository.getCustomersLastOrder();
+    }
 
 }

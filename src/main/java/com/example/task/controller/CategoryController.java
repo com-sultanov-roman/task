@@ -8,11 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@Controller
+@RestController
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -23,7 +24,6 @@ public class CategoryController {
 
 
     @GetMapping(value = "category/list")
-    @ResponseBody
     private String getCategoryList(){
         List<Category> categoryList = categoryService.getAll();
         ResponseListWrapper<Category> responseListWrapper = new ResponseListWrapper<>(categoryList);
@@ -31,7 +31,6 @@ public class CategoryController {
     }
 
     @GetMapping(value = "category")
-    @ResponseBody
     private String getCategoryById(@RequestParam(name = "product_id") int productId, HttpServletResponse httpServletResponse){
         Category category = categoryService.getProductCategoryById(productId);
         ResponseObjectWrapper<Category> responseObjectWrapper = new ResponseObjectWrapper<>();

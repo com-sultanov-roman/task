@@ -3,17 +3,14 @@ package com.example.task.controller;
 import com.example.task.dto.CustomersLastOrderDTO;
 import com.example.task.dto.NumberOfProductsInYearDTO;
 import com.example.task.model.Customer;
-import com.example.task.model.Order;
 import com.example.task.service.CustomerService;
 import com.example.task.wrapper.ResponseListWrapper;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
-@Controller
-@ResponseBody
+@RestController
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -31,20 +28,8 @@ public class CustomerController {
 
     @GetMapping(value = "customers_last_orders")
     private String getCustomersLastOrders() {
-        List<Customer> customerList = customerService.getAll();
-        List<CustomersLastOrderDTO> resultList = new ArrayList<>();
-        customerList.forEach(customer -> {
-            if (!customer.getOrders().isEmpty()) {
-                CustomersLastOrderDTO customersLastOrderDTO = new CustomersLastOrderDTO();
-                Order mostRecentOrder;
-                customersLastOrderDTO.setId(customer.getId());
-                customersLastOrderDTO.setName(customer.getName());
-                mostRecentOrder = Collections.max(customer.getOrders(), (o1, o2) -> Long.signum(o1.getDate().getTime() - o2.getDate().getTime()));
-                customersLastOrderDTO.setDate(mostRecentOrder.getDate());
-                resultList.add(customersLastOrderDTO);
-            }
-        });
-        ResponseListWrapper<CustomersLastOrderDTO> responseListWrapper = new ResponseListWrapper<>(resultList);
+        List<CustomersLastOrderDTO> customersLastOrderDTOList = customerService.getCustomersLastOrder();
+        ResponseListWrapper<CustomersLastOrderDTO> responseListWrapper = new ResponseListWrapper<>(customersLastOrderDTOList);
         return responseListWrapper.toString();
     }
 
@@ -54,5 +39,4 @@ public class CustomerController {
         ResponseListWrapper<NumberOfProductsInYearDTO> responseListWrapper = new ResponseListWrapper<>(numberOfProductsInYearDTOList);
         return responseListWrapper.toString();
     }
-
 }

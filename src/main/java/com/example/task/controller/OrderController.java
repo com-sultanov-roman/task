@@ -16,8 +16,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller
-@ResponseBody
+@RestController
 public class OrderController {
 
     private final OrderService orderService;

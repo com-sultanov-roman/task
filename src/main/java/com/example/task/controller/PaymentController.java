@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
-@Controller
-@ResponseBody
+@RestController
 public class PaymentController {
 
     private final PaymentService paymentService;
