@@ -18,10 +18,10 @@ public class Product {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
 
-    @Column(columnDefinition = "VARCHAR(10)")
+    @Column(columnDefinition = "VARCHAR")
     private String name;
 
-    @Column(columnDefinition = "VARCHAR(20)")
+    @Column(columnDefinition = "VARCHAR")
     private String description;
 
     @Column(columnDefinition = "NUMERIC(6, 2)")

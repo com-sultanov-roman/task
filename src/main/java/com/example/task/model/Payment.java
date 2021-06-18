@@ -16,7 +16,7 @@ public class Payment {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    private java.util.Date timestamp;
+    private java.util.Date time;
 
     @Column(columnDefinition = "NUMERIC(8,2)", nullable = false)
     private BigDecimal amount;

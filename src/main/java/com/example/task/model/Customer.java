@@ -17,10 +17,10 @@ public class Customer {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
 
-    @Column(columnDefinition = "VARCHAR(14) NOT NULL")
+    @Column(columnDefinition = "VARCHAR NOT NULL")
     private String name;
 
-    @Column(columnDefinition = "CHAR(3)")
+    @Column(columnDefinition = "CHAR(255)")
     private String country;
 
     @Column(columnDefinition = "TEXT")

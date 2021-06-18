@@ -21,7 +21,7 @@ public class Detail {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="ord_id", nullable = false)
+    @JoinColumn(name="ord_id")
     private Order order;
 
     @JsonIgnore

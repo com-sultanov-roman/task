@@ -3,8 +3,6 @@ package com.example.task.repository;
 import com.example.task.dto.CustomersLastOrderDTO;
 import com.example.task.dto.NumberOfProductsInYearDTO;
 import com.example.task.model.Customer;
-import com.example.task.model.Order;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

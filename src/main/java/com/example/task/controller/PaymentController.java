@@ -44,7 +44,7 @@ public class PaymentController {
         if(invoice != null){
             Payment payment = new Payment();
             payment.setInvoice(invoice);
-            payment.setTimestamp(new Date(System.currentTimeMillis()));
+            payment.setTime(new Date(System.currentTimeMillis()));
             payment.setAmount(invoice.getAmount());
             makePaymentHttpResponseDTO.setStatus("SUCCESS");
             makePaymentHttpResponseDTO.setPayment(payment);
